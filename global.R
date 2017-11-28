@@ -3,8 +3,13 @@ library(mgcv)
 library(scales)
 library(ggplot2)
 library(reshape2)
+library(lubridate)
 
 source("pub_graphs.R")
+
+give.n <- function(x){
+  return(c(y = mean(x) + .5, label = length(x)))
+}
 
 data_download_time <- strptime(format(file.info("testResults.Rds")$ctime), format = "%Y-%m-%d %H:%M:%S")
 file_age <- Sys.time() - data_download_time
@@ -59,28 +64,6 @@ if (file_age > 900 | !file.exists("testResults.Rds")) {
   test_results$Distance_mi <- test_results$Distance * 0.621371
   
   test_results$hour_of_day <- as.integer(format(test_results$Timestamp, "%H"))
-  means$mean0.4. <- with(test_results, mean(Download_mb[hour_of_day > 0 & hour_of_day < 4]))
-  means$mean4.8. <- with(test_results, mean(Download_mb[hour_of_day > 4 & hour_of_day < 8]))
-  means$mean8.12. <- with(test_results, mean(Download_mb[hour_of_day > 8 & hour_of_day < 12]))
-  means$mean12.16. <- with(test_results, mean(Download_mb[hour_of_day > 12 & hour_of_day < 16]))
-  means$mean16.20. <- with(test_results, mean(Download_mb[hour_of_day > 16 & hour_of_day < 20]))
-  means$mean20.24. <- with(test_results, mean(Download_mb[hour_of_day > 20 & hour_of_day < 24]))
-  means <- melt(means)
-  colnames(means) <- c("speed", "time.window")
-  means$measurement <- "down"
-  
-  means_ = list()
-  means_$mean0.4. <- with(test_results, mean(Upload_mb[hour_of_day > 0 & hour_of_day < 4]))
-  means_$mean4.8. <- with(test_results, mean(Upload_mb[hour_of_day > 4 & hour_of_day < 8]))
-  means_$mean8.12. <- with(test_results, mean(Upload_mb[hour_of_day > 8 & hour_of_day < 12]))
-  means_$mean12.16. <- with(test_results, mean(Upload_mb[hour_of_day > 12 & hour_of_day < 16]))
-  means_$mean16.20. <- with(test_results, mean(Upload_mb[hour_of_day > 16 & hour_of_day < 20]))
-  means_$mean20.24. <- with(test_results, mean(Upload_mb[hour_of_day > 20 & hour_of_day < 24]))
-  means_ <- melt(means_)
-  colnames(means_) <- c("speed", "time.window")
-  means_$measurement <- "up"
-  
-  means <- rbind(means, means_)  # Combine the two dataframes
   
   plots$download_speed <- ggplot(test_results, 
                                  aes(x = Timestamp,
@@ -88,7 +71,7 @@ if (file_age > 900 | !file.exists("testResults.Rds")) {
     geom_hline(yintercept = 100, colour = 'red', aes(linetype = "Subscription Speed")) +
     #scale_linetype_manual(values = c("Subscription Speed"), guide = guide_legend(override.aes = list(color = c("red")))) +
     annotate("text", x = median(test_results$Timestamp), y = 100, vjust = -.5, label = "Subscribed Download Speed") +
-    geom_point(aes(color = Sponsor)) +
+    geom_point(aes(color = Sponsor), size = 2) +
     #geom_smooth(method = 'lm', formula = y ~ poly(x, 2), size = 1) +
     stat_smooth(method = "gam", formula = y ~ s(x, k = 6), size = .75, level = .99) +
     #scale_y_log10() +
@@ -107,7 +90,7 @@ if (file_age > 900 | !file.exists("testResults.Rds")) {
                                    y = Upload_mb)) +
     geom_hline(yintercept = 10, color = "red", aes(linetype = "Subscription Speed")) +
     annotate("text", x = median(test_results$Timestamp), y = 10, vjust = -.5, label = "Subscribed Upload Speed") +
-    geom_point(aes(color = Sponsor)) +
+    geom_point(aes(color = Sponsor), size = 2) +
     #geom_smooth(method = 'lm', formula = y ~ poly(x, 2), size = 1) +
     stat_smooth(method = "gam", formula = y ~ s(x, k = 6), size = .75, level = .99) +
     #scale_y_log10() +
@@ -142,13 +125,21 @@ if (file_age > 900 | !file.exists("testResults.Rds")) {
     labs(title = "Charter Internet Upload Speed - All Dates",
          y = "Upload Speed in Megabits per Second")
   
+  test_results$hour_group <- cut(hour(test_results$Timestamp), 
+                                 breaks = c(0, 4, 8, 12, 16, 20, 24), 
+                                 include.lowest = T)
+  
   plots$time.of.day.down.speed <- ggplot(test_results, 
-                                    aes(x = hour_of_day, 
+                                    aes(x = hour(Timestamp), 
                                         y = Download_mb)) + 
-    stat_binhex(bins = 10) + 
+    stat_binhex(bins = 10) +
     theme_Publication() +
     scale_fill_gradient(low = "forestgreen", 
                         high = "firebrick") +
+    scale_x_continuous(breaks = seq(0, 24, by = 4),
+                       labels = c("12 AM", "4 AM", "8 AM",
+                                  "12 PM", "4 PM", "8 PM",
+                                  "12 AM")) +
     labs(title = "Charter Internet Download Speed - Time of Day",
          x = "Hour of Day",
          y = "Download Speed in Megabits per Second",
@@ -156,18 +147,46 @@ if (file_age > 900 | !file.exists("testResults.Rds")) {
     theme(legend.key.height = unit(1, "line"))
   
   plots$time.of.day.up.speed <- ggplot(test_results, 
-                                    aes(x = hour_of_day, 
+                                    aes(x = hour(Timestamp), 
                                         y = Upload_mb)) + 
     stat_binhex(bins = 10) + 
     theme_Publication() +
     scale_fill_gradient(low = "forestgreen", 
                         high = "firebrick") +
+    scale_x_continuous(breaks = seq(0, 24, by = 4),
+                       labels = c("12 AM", "4 AM", "8 AM",
+                                  "12 PM", "4 PM", "8 PM",
+                                  "12 AM")) +
     labs(title = "Charter Internet Upload Speed - Time of Day",
          x = "Hour of Day",
          y = "Upload Speed in Megabits per Second",
          fill = "Count per Bin") +
     theme(legend.key.height = unit(1, "line"))
   
+  test_results$day.of.week <- factor(weekdays(test_results$Timestamp), 
+                                     levels = c("Sunday", "Monday", "Tuesday",
+                                                "Wednesday", "Thursday", "Friday",
+                                                "Saturday"))
+  
+  plots$day.of.week.down <- ggplot(test_results, aes(day.of.week, Download_mb)) + 
+    geom_bar(position = "dodge", 
+             stat = "summary", 
+             fun.y = "mean") +
+    scale_x_discrete() +
+    theme_Publication() +
+    labs(title = "Charter Internet Download Speed - Day of Week",
+         x = "Day of Week",
+         y = "Download Speed in Megabits per Second") +
+    theme(legend.key.height = unit(1, "line"))
+  
+  plots$day.of.week.up <- ggplot(test_results) + 
+    geom_bar(aes(day.of.week, Upload_mb), 
+             position = "dodge", stat = "summary", fun.y = "mean") +
+    theme_Publication() +
+    labs(title = "Charter Internet Upload Speed - Day of Week",
+         x = "Day of Week",
+         y = "Upload Speed in Megabits per Second") +
+    theme(legend.key.height = unit(1, "line")) 
   
   saveRDS(test_results, file = "testResults.Rds")
   saveRDS(plots, "plots.Rds")

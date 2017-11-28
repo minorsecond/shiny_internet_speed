@@ -38,13 +38,15 @@ mydashboardHeader <- function(..., title = NULL, disable = FALSE,title.navbar=NU
 
 # Define UI for application that draws a histogram
 ui <- dashboardPage(
+  title="Spectrum Speed",
   skin = "black",
-  mydashboardHeader(title = "Charter Internet Speed Tests"),
+  mydashboardHeader(title = "Spectrum Speed"),
   dashboardSidebar(width = 0),
   dashboardBody(
+    tags$head(tags$link(rel = "shortcut icon", href = "favicon.ico")),
     tags$head(tags$style(
       type="text/css",
-      "#binned_down img, #binned_up img {
+      "#binned_down img, #binned_up img, #day_week_down img, #day_week_up img{
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -64,8 +66,18 @@ ui <- dashboardPage(
                tabsetPanel(
                  tabPanel(title = "Download",
                           plotOutput("binned_down", width = "100%", height = "100%")),
+                 
                  tabPanel(title = "Upload",
                           plotOutput("binned_up", width = "100%", height = "100%")))),
+      
+      tabPanel(title = "Mean Speeds by Day of Week",
+               tabsetPanel(
+                 tabPanel(title = "Download",
+                          plotOutput("day_week_down", width = "100%", height = "100%")),
+                 
+                 tabPanel(title = "Upload",
+                          plotOutput("day_week_up", width = "100%", height = "100%")))),
+      
       tabPanel(title = "Overall Download / Upload Speeds",
                plotOutput("all_down_up_speeds")),
       tabPanel(title = "About",
@@ -73,7 +85,7 @@ ui <- dashboardPage(
                p("After calling Charter/Spectrum numberous times about slow or 
                  nonexistant internet service, I wanted to emperically show
                  what was going on. We subscribe to Spectrum's 100 Mb per second 
-                 down / 10 Mb per seocnd up service. Using R and Shiny, I created this webapp
+                 down / 10 Mb per second up service. Using R and Shiny, I created this webapp
                  to display my internet speed over time."),
                br(),
                br(),
@@ -108,6 +120,18 @@ server <- function(input, output) {
   
   output$binned_up <- renderPlot(
     plots$time.of.day.up.speed,
+    height = 600,
+    width = 586
+  )
+  
+  output$day_week_down <- renderPlot(
+    plots$day.of.week.down,
+    height = 600,
+    width = 586
+  )
+  
+  output$day_week_up <- renderPlot(
+    plots$day.of.week.up,
     height = 600,
     width = 586
   )
