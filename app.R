@@ -45,7 +45,6 @@ ui <- dashboardPage(
     tags$head(tags$style(
       type="text/css",
       "#binned_down img, #binned_up img {
-    width: 80%;
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -104,13 +103,13 @@ server <- function(input, output) {
   output$binned_down <- renderPlot(
     plots$time.of.day.down.speed,
     height = 600,
-    width = 800
+    width = 586
   )
   
   output$binned_up <- renderPlot(
     plots$time.of.day.up.speed,
     height = 600,
-    width = 800
+    width = 586
   )
 
   output$all_down_up_speeds <- renderPlot(
