@@ -46,7 +46,7 @@ ui <- dashboardPage(
     tags$head(tags$link(rel = "shortcut icon", href = "favicon.ico")),
     tags$head(tags$style(
       type="text/css",
-      "#binned_down img, #binned_up img, #day_week_down img, #day_week_up img{
+      "#date_download img, #date_upload img, #binned_down img, #binned_up img, #day_week_down img, #day_week_up img{
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -55,27 +55,28 @@ ui <- dashboardPage(
     tabsetPanel(
       #tags$head(tags$style("#all_down_up_speeds{height:100vh !important;}")),
       tabPanel(title = "Speeds Over Time",
-               fluidRow(
-                 plotOutput("date_download")
-                 ),
-               fluidRow(
-                 plotOutput("date_upload")
-                 )
-               ),
+               tabsetPanel(
+                 tabPanel(title = "Download Speed",
+                          plotOutput("date_download", width = "100%", height = "100%")
+                          ),
+                 tabPanel(title = "Upload Speed",
+                          plotOutput("date_upload", width = "100%", height = "100%")
+                          )
+                 )),
       tabPanel(title = "Speeds Binned by Hour of Day",
                tabsetPanel(
-                 tabPanel(title = "Download",
+                 tabPanel(title = "Download Speed",
                           plotOutput("binned_down", width = "100%", height = "100%")),
                  
-                 tabPanel(title = "Upload",
+                 tabPanel(title = "Upload Speed",
                           plotOutput("binned_up", width = "100%", height = "100%")))),
       
       tabPanel(title = "Mean Speeds by Day of Week",
                tabsetPanel(
-                 tabPanel(title = "Download",
+                 tabPanel(title = "Download Speed",
                           plotOutput("day_week_down", width = "100%", height = "100%")),
                  
-                 tabPanel(title = "Upload",
+                 tabPanel(title = "Upload Speed",
                           plotOutput("day_week_up", width = "100%", height = "100%")))),
       
       tabPanel(title = "Overall Download / Upload Speeds",
@@ -105,11 +106,15 @@ ui <- dashboardPage(
 server <- function(input, output) {
   source("global.R")
   output$date_download <- renderPlot(
-    plots$download_speed
+    plots$download_speed,
+    height = 600,
+    width = 900
   )
   
   output$date_upload <- renderPlot(
-    plots$upload_speed
+    plots$upload_speed,
+    height = 600,
+    width = 900
   )
   
   output$binned_down <- renderPlot(

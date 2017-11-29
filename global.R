@@ -238,6 +238,7 @@ if (file_age > 900 | !file.exists("testResults.Rds")) {
     scale_x_datetime(labels = date_format("%d-%m-%Y", 
                                           tz = "America/Chicago")) +
     theme_Publication() + 
+    scale_colour_Publication() +
     labs(title = "Charter Internet Upload Speed",
          x = "Local Time (CST)",
          y = "Upload Speed in Megabits per Second") +
