@@ -79,7 +79,7 @@ if (file_age > 900 | !file.exists("testResults.Rds")) {
     geom_point(aes(color = Sponsor), size = 2) +
     #geom_smooth(method = 'lm', formula = y ~ poly(x, 2), size = 1) +
     stat_smooth(method = "gam", 
-                formula = y ~ s(x, k = 6), 
+                formula = y ~ s(x, k = 24), 
                 size = .75, 
                 level = .99) +
     scale_y_sqrt() +
@@ -99,7 +99,7 @@ if (file_age > 900 | !file.exists("testResults.Rds")) {
     geom_hline(yintercept = 10, color = "red", aes(linetype = "Subscription Speed")) +
     annotate("text", x = median(test_results$Timestamp), y = 10, vjust = -.5, label = "Subscribed Upload Speed") +
     geom_point(aes(color = Sponsor), size = 2) +
-    stat_smooth(method = "gam", formula = y ~ s(x, k = 6), size = .75, level = .99) +
+    stat_smooth(method = "gam", formula = y ~ s(x, k = 24), size = .75, level = .99) +
     scale_y_sqrt() +
     scale_x_datetime(labels = date_format("%d-%m-%Y", 
                                           tz = "America/Chicago"),
