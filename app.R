@@ -1,6 +1,7 @@
 # My subscription is for 100Mbps down, 10  Mbps up
 #
 rm(list = ls())
+library(Cairo)
 library(shiny)
 library(shinydashboard)
 library(RPostgreSQL)

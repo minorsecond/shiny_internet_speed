@@ -1,4 +1,5 @@
 library(RPostgreSQL)
+library(Cairo)
 library(mgcv)
 library(scales)
 library(ggplot2)
@@ -34,7 +35,7 @@ if (file_age > 900 | !file.exists("testResults.Rds")) {
   
   con <- dbConnect(drv, 
                    dbname = "internetStatus",
-                   host = "192.168.1.8",
+                   host = "spatstats.com",
                    user = "rwardrup",
                    password = pw)
   db.connect.time <- Sys.time() - query.start.time
