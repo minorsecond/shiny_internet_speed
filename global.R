@@ -16,7 +16,7 @@ data_download_time <- strptime(format(file.info("testResults.Rds")$ctime), forma
 file_age <- Sys.time() - data_download_time
 
 print(paste("file age: ", file_age, sep = ""))
-if (file_age > 900 | !file.exists("testResults.Rds")) {
+if (file_age > 15 | !file.exists("testResults.Rds")) {
   rm(list = ls())
   
   source("pub_graphs.R")

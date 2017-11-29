@@ -104,7 +104,8 @@ ui <- dashboardPage(
 )
 
 # Define server logic required to draw a histogram
-server <- function(input, output) {
+server <- function(input, output, session) {
+  session$allowReconnect(TRUE)  # Allow new-session reconnections
   source("global.R")
   output$date_download <- renderPlot(
     plots$download_speed,
