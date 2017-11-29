@@ -11,7 +11,7 @@ library(gridExtra)
 
 rm(plots)
 #source("global.R")
-
+plots <- readRDS("plots.Rds")
 mydashboardHeader <- function(..., title = NULL, disable = FALSE,title.navbar=NULL, .list = NULL) {
   items <- c(list(...), .list)
   #lapply(items, tagAssert, type = "li", class = "dropdown")
@@ -106,7 +106,7 @@ ui <- dashboardPage(
 # Define server logic required to draw a histogram
 server <- function(input, output, session) {
   session$allowReconnect(TRUE)  # Allow new-session reconnections
-  source("global.R")
+  #source("global.R")
   output$date_download <- renderPlot(
     plots$download_speed,
     height = 600,
