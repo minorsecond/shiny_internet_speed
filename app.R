@@ -10,7 +10,6 @@ library(ggplot2)
 library(gridExtra)
 #library(keyringr)
 
-rm(plots)
 #source("global.R")
 plots <- readRDS("plots.Rds")
 mydashboardHeader <- function(..., title = NULL, disable = FALSE,title.navbar=NULL, .list = NULL) {
@@ -108,6 +107,7 @@ ui <- dashboardPage(
 server <- function(input, output, session) {
   session$allowReconnect(TRUE)  # Allow new-session reconnections
   #source("global.R")
+  rm(plots)
   output$date_download <- renderPlot(
     plots$download_speed,
     height = 600,

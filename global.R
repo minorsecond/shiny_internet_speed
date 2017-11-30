@@ -16,7 +16,8 @@ data_download_time <- strptime(format(file.info("testResults.Rds")$ctime), forma
 file_age <- Sys.time() - data_download_time
 
 print(paste("file age: ", file_age, sep = ""))
-if (file_age > 15 | !file.exists("testResults.Rds")) {
+#if (file_age > 15 | !file.exists("testResults.Rds")) {
+if (T){
   rm(list = ls())
   
   source("pub_graphs.R")
@@ -139,7 +140,7 @@ if (file_age > 15 | !file.exists("testResults.Rds")) {
   
   plots$time.of.day.down.speed <- ggplot(test_results, 
                                     aes(x = hour(Timestamp), 
-                                        y = Download_mb)) + 
+                                        y = Download_mb), alpha = ..count..) + 
     stat_binhex(bins = 10) +
     theme_Publication() +
     scale_fill_gradient(low = "forestgreen", 
