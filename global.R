@@ -130,7 +130,7 @@ if (T){
     theme(legend.position = "bottom",
           legend.direction = "horizontal") +
     scale_colour_Publication() +
-    labs(title = "XFinity (Comcast) Internet Download Speed",
+    labs(title = "XFinity Internet Download Speed",
          x = "Local Time (CST)",
          y = "Download Speed in Megabits per Second",
          col = "Speed Test Server Sponsor")
@@ -147,7 +147,7 @@ if (T){
                                           tz = "America/Chicago"),
                      breaks = date_breaks("1 day")) +
     theme_Publication() +
-    labs(title = "XFinity (Comcast) Internet Upload Speed",
+    labs(title = "XFinity Internet Upload Speed",
          x = "Local Time (CST)",
          y = "Upload Speed in Megabits per Second",
          col = "Speed Test Server Sponsor")
@@ -239,7 +239,7 @@ if (T){
               color = "white") +
     scale_x_discrete() +
     theme_Publication() +
-    labs(title = "XFinity (Comcast) Internet Download Speed - Day of Week",
+    labs(title = "XFinity Internet Download Speed - Day of Week",
          x = "Day of Week",
          y = "Download Speed in Megabits per Second") +
     theme(legend.key.height = unit(1, "line"))
@@ -265,7 +265,7 @@ if (T){
               color = "white") +
     scale_x_discrete() +
     theme_Publication() +
-    labs(title = "XFinity (Comcast) Internet Upload Speed - Day of Week",
+    labs(title = "XFinity Internet Upload Speed - Day of Week",
          x = "Day of Week",
          y = "Upload Speed in Megabits per Second") +
     theme(legend.key.height = unit(1, "line")) 
@@ -296,7 +296,7 @@ if (T){
                                           tz = "America/Chicago")) +
     theme_Publication() +
     scale_colour_Publication() +
-    labs(title = "XFinity (Comcast) Internet Download Speed",
+    labs(title = "XFinity Internet Download Speed",
          x = "Local Time (CST)",
          y = "Download Speed in Megabits per Second",
          col = "Speed Test Server Sponsor")
@@ -314,7 +314,7 @@ if (T){
                                           tz = "America/Chicago")) +
     theme_Publication() + 
     scale_colour_Publication() +
-    labs(title = "XFinity (Comcast) Internet Upload Speed",
+    labs(title = "XFinity Internet Upload Speed",
          x = "Local Time (CST)",
          y = "Upload Speed in Megabits per Second") +
     theme(legend.position = "none")
@@ -327,7 +327,7 @@ if (T){
     theme(axis.title.x = element_blank(),
           axis.text.x = element_blank(),
           axis.ticks.x = element_blank()) +
-    labs(title = "XFinity (Comcast) Internet Download Speed - All Dates",
+    labs(title = "XFinity Internet Download Speed - All Dates",
          y = "Download Speed in Megabits per Second")
   
   plots$overall_up_speeds <- ggplot(test_results,
@@ -338,7 +338,7 @@ if (T){
     theme(axis.title.x = element_blank(),
           axis.text.x = element_blank(),
           axis.ticks.x = element_blank()) +
-    labs(title = "XFinity (Comcast) Internet Upload Speed - All Dates",
+    labs(title = "XFinity Internet Upload Speed - All Dates",
          y = "Upload Speed in Megabits per Second")
   
   plots$time.of.day.speed <- ggplot(test_results, 
@@ -348,7 +348,7 @@ if (T){
     theme_Publication() +
     scale_fill_gradient(low = "forestgreen", 
                         high = "firebrick") +
-    labs(title = "XFinity (Comcast) Internet Download Speed - Time of Day",
+    labs(title = "XFinity Internet Download Speed - Time of Day",
          x = "Hour of Day",
          y = "Download Speed in Megabits per Second",
          fill = "Count per Bin") +
