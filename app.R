@@ -10,6 +10,8 @@ library(ggplot2)
 library(gridExtra)
 #library(keyringr)
 
+print(getwd())
+
 #source("global.R")
 plots <- readRDS("./plots.Rds")
 mydashboardHeader <- function(..., title = NULL, disable = FALSE,title.navbar=NULL, .list = NULL) {
@@ -108,7 +110,7 @@ ui <- dashboardPage(
 # Define server logic required to draw a histogram
 server <- function(input, output, session) {
   session$allowReconnect(TRUE)  # Allow new-session reconnections
-  plots <- readRDS("~/Projects/internetSpeeds/plots.Rds")
+  plots <- readRDS("./plots.Rds")
   #source("global.R")
   #rm(plots)
   output$date_download <- renderPlot(
