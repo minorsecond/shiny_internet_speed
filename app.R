@@ -2,7 +2,7 @@
 #
 rm(list = ls())
 library(lubridate)
-library(Cairo)
+#library(Cairo)
 library(shiny)
 library(shinydashboard)
 library(RPostgreSQL)
@@ -11,7 +11,7 @@ library(gridExtra)
 #library(keyringr)
 
 #source("global.R")
-plots <- readRDS("plots.Rds")
+plots <- readRDS("/home/rwardrup/Projects/internetSpeeds/plots.Rds")
 mydashboardHeader <- function(..., title = NULL, disable = FALSE,title.navbar=NULL, .list = NULL) {
   items <- c(list(...), .list)
   #lapply(items, tagAssert, type = "li", class = "dropdown")
@@ -39,9 +39,9 @@ mydashboardHeader <- function(..., title = NULL, disable = FALSE,title.navbar=NU
 
 # Define UI for application that draws a histogram
 ui <- dashboardPage(
-  title="Spectrum Speed",
+  title="XFinity (Comcast) Gigabit Speed",
   skin = "black",
-  mydashboardHeader(title = "Spectrum Speed"),
+  mydashboardHeader(title = "XFinity (Comcast) Gigabit Speed"),
   dashboardSidebar(width = 0),
   dashboardBody(
     tags$head(tags$link(rel = "shortcut icon", href = "favicon.ico")),
@@ -84,11 +84,13 @@ ui <- dashboardPage(
                plotOutput("all_down_up_speeds")),
       tabPanel(title = "About",
                br(),
-               p("After calling Charter/Spectrum numberous times about slow or 
+               p("After calling Charter/Spectrum numerous times about slow or 
                  nonexistant internet service, I wanted to emperically show
-                 what was going on. We subscribe to Spectrum's 100 Mb per second 
+                 what was going on. We subscribed to Spectrum's 100 Mb per second 
                  down / 10 Mb per second up service. Using R and Shiny, I created this webapp
-                 to display my internet speed over time."),
+                 to display my internet speed over time.
+                 I've since moved and subscribed to XFinity's gigabit fiber service, but decided to
+                 migrate this tool over to that service."),
                br(),
                br(),
                p("Using Matt Martz' speedtest-cli (found at the link at bottom of page),
@@ -106,8 +108,9 @@ ui <- dashboardPage(
 # Define server logic required to draw a histogram
 server <- function(input, output, session) {
   session$allowReconnect(TRUE)  # Allow new-session reconnections
+  plots <- readRDS("~/Projects/internetSpeeds/plots.Rds")
   #source("global.R")
-  rm(plots)
+  #rm(plots)
   output$date_download <- renderPlot(
     plots$download_speed,
     height = 600,

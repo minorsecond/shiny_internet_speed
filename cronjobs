@@ -1,0 +1,2 @@
+# Cron jobs to install
+0,15,30,45 * * * * /usr/bin/docker run --rm moutten/speedtest-cli --csv >> /root/shinyapps/InternetSpeeds/data/speedtest_data && /usr/bin/python3 /root/shinyapps/InternetSpeeds/data_ingest.py >> /root/upload_log
