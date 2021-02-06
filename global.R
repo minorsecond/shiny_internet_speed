@@ -6,7 +6,9 @@ library(ggplot2)
 library(reshape2)
 library(lubridate)
 
-source(" ./pub_graphs.R")
+print(getwd())
+
+source("./pub_graphs.R")
 
 summarySE <- function(data=NULL, measurevar, groupvars=NULL, na.rm=FALSE,
                       conf.interval=.95, .drop=TRUE) {
