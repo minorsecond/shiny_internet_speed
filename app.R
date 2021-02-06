@@ -11,7 +11,7 @@ library(gridExtra)
 #library(keyringr)
 
 #source("global.R")
-plots <- readRDS("/home/rwardrup/Projects/internetSpeeds/plots.Rds")
+plots <- readRDS("./plots.Rds")
 mydashboardHeader <- function(..., title = NULL, disable = FALSE,title.navbar=NULL, .list = NULL) {
   items <- c(list(...), .list)
   #lapply(items, tagAssert, type = "li", class = "dropdown")
