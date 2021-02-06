@@ -6,7 +6,7 @@ library(ggplot2)
 library(reshape2)
 library(lubridate)
 
-source(" /home/rwardrup/Projects/internetSpeeds/pub_graphs.R")
+source(" ./pub_graphs.R")
 
 summarySE <- function(data=NULL, measurevar, groupvars=NULL, na.rm=FALSE,
                       conf.interval=.95, .drop=TRUE) {
@@ -48,7 +48,7 @@ give.n <- function(x){
   return(c(y = mean(x) + .5, label = length(x)))
 }
 
-data_download_time <- strptime(format(file.info("/home/rwardrup/Projects/testResults.Rds")$ctime), format = "%Y-%m-%d %H:%M:%S")
+data_download_time <- strptime(format(file.info("./testResults.Rds")$ctime), format = "%Y-%m-%d %H:%M:%S")
 file_age <- Sys.time() - data_download_time
 
 print(paste("file age: ", file_age, sep = ""))
@@ -268,16 +268,16 @@ if (T){
          y = "Upload Speed in Megabits per Second") +
     theme(legend.key.height = unit(1, "line")) 
   
-  saveRDS(test_results, file = "/home/rwardrup/Projects/InternetSpeeds/testResults.Rds")
-  saveRDS(plots, "/home/rwardrup/Projects/InternetSpeeds/plots.Rds")
+  saveRDS(test_results, file = "./testResults.Rds")
+  saveRDS(plots, "./plots.Rds")
   #print("Saved new testResults.Rds file")
-} else if (!exists("plots") & exists("/home/rwardrup/Projects/internetSpeeds/plots.Rds")) {
+} else if (!exists("plots") & exists("./plots.Rds")) {
   cat(file=stderr(), "testResults.Rds isn't expired and plots aren't loaded... loading plots from disk.")
   #print("testResults.Rds isn't expired and plots aren't loaded... loading plots from disk.")
-  plots <- readRDS("/home/rwardrup/Projects/InternetSpeeds/plots.Rds")
+  plots <- readRDS("./plots.Rds")
   #print("Finished loading Plots")
-} else if (!exists("plots") & !exists("/home/rwardrup/Projects/InternetSpeeds/plots.Rds") & file.exists("/srv/shiny-server/InternetSpeeds/testResults.Rds")) {
-  test_results <- readRDS("/home/rwardrup/Projects/InternetSpeeds/testResults.Rds")
+} else if (!exists("plots") & !exists("./plots.Rds") & file.exists("/srv/shiny-server/InternetSpeeds/testResults.Rds")) {
+  test_results <- readRDS("./testResults.Rds")
   plots = list()
   
   plots$download_speed <- ggplot(test_results, 
@@ -355,5 +355,5 @@ if (T){
 } else {
   rm(plots)
   cat(file=stderr(), "Plots already loaded - displaying them now.")
-  plots <- readRDS("/home/rwardrup/Projects/InternetSpeeds/plots.Rds")
+  plots <- readRDS("./plots.Rds")
 }
