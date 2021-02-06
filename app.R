@@ -10,6 +10,9 @@ library(ggplot2)
 library(gridExtra)
 #library(keyringr)
 
+script.dir <- dirname(sys.frame(1)$ofile)
+print(script.dir)
+
 #source("global.R")
 plots <- readRDS("./plots.Rds")
 mydashboardHeader <- function(..., title = NULL, disable = FALSE,title.navbar=NULL, .list = NULL) {
