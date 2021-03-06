@@ -141,9 +141,7 @@ if (T){
     geom_point(aes(color = sponsor), size = 2) +
     stat_smooth(method = "gam", formula = y ~ s(x, k = 12), size = .75, level = .99) +
     scale_y_sqrt() +
-    scale_x_datetime(labels = date_format("%d-%m-%Y", 
-                                          tz = "America/Denver"),
-                     breaks = date_breaks("1 day")) +
+    scale_x_datetime(labels = date_format("%b %d %Y")) +
     theme_Publication() +
     labs(title = "XFinity Internet Upload Speed",
          x = "Local Time (MST)",
