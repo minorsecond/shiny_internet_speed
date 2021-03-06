@@ -97,7 +97,7 @@ if (T){
   
   test_results$timestamp <- as.POSIXct(strptime(test_results$timestamp, 
                                                "%Y-%m-%d %H:%M:%S", 
-                                               tz="UTC"), tz = "America/Chicago") - (6*3600)
+                                               tz="UTC"), tz = "America/Denver") - (6*3600)
   
   test_results$download_mb <- test_results$download * 0.000000954
   test_results$upload_mb <- test_results$upload * 0.000000954
@@ -123,15 +123,13 @@ if (T){
                 size = .75, 
                 level = .99) +
     scale_y_sqrt() +
-    scale_x_datetime(labels = date_format("%d-%m-%Y", 
-                                          tz = "America/Chicago"),
-                     breaks = date_breaks("1 day")) +
+    scale_x_datetime(labels = date_format("%b %d %Y")) +
     theme_Publication() +
     theme(legend.position = "bottom",
           legend.direction = "horizontal") +
     scale_colour_Publication() +
     labs(title = "XFinity Internet Download Speed",
-         x = "Local Time (CST)",
+         x = "Local Time (MST)",
          y = "Download Speed in Megabits per Second",
          col = "Speed Test Server Sponsor")
   
@@ -144,11 +142,11 @@ if (T){
     stat_smooth(method = "gam", formula = y ~ s(x, k = 12), size = .75, level = .99) +
     scale_y_sqrt() +
     scale_x_datetime(labels = date_format("%d-%m-%Y", 
-                                          tz = "America/Chicago"),
+                                          tz = "America/Denver"),
                      breaks = date_breaks("1 day")) +
     theme_Publication() +
     labs(title = "XFinity Internet Upload Speed",
-         x = "Local Time (CST)",
+         x = "Local Time (MST)",
          y = "Upload Speed in Megabits per Second",
          col = "Speed Test Server Sponsor")
   
@@ -293,11 +291,11 @@ if (T){
     stat_smooth(method = "gam", formula = y ~ s(x, k = 6), alpha = .15) +
     #scale_y_sqrt() +
     scale_x_datetime(labels = date_format("%d-%m-%Y", 
-                                          tz = "America/Chicago")) +
+                                          tz = "America/Denver")) +
     theme_Publication() +
     scale_colour_Publication() +
     labs(title = "XFinity Internet Download Speed",
-         x = "Local Time (CST)",
+         x = "Local Time (MST)",
          y = "Download Speed in Megabits per Second",
          col = "Speed Test Server Sponsor")
   
@@ -311,11 +309,11 @@ if (T){
     stat_smooth(method = "gam", formula = y ~ s(x, k = 6), alpha = .15, show.legend = F) +
     scale_y_sqrt() +
     scale_x_datetime(labels = date_format("%d-%m-%Y", 
-                                          tz = "America/Chicago")) +
+                                          tz = "America/Denver")) +
     theme_Publication() + 
     scale_colour_Publication() +
     labs(title = "XFinity Internet Upload Speed",
-         x = "Local Time (CST)",
+         x = "Local Time (MST)",
          y = "Upload Speed in Megabits per Second") +
     theme(legend.position = "none")
   
