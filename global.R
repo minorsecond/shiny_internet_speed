@@ -232,7 +232,8 @@ if (T){
                                 sep = "")), 
               position = position_dodge(width = 0.9),
               vjust = 5,
-              color = "white") +
+              color = "white",
+              size=3) +
     scale_x_discrete() +
     theme_Publication() +
     labs(title = "XFinity Internet Download Speed - Day of Week",
@@ -258,7 +259,8 @@ if (T){
                                 sep = "")), 
               position = position_dodge(width = 0.9),
               vjust = 5,
-              color = "white") +
+              color = "white",
+              size = 3) +
     scale_x_discrete() +
     theme_Publication() +
     labs(title = "XFinity Internet Upload Speed - Day of Week",
